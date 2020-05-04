@@ -6,26 +6,41 @@ namespace App;
 
 class Route
 {
+    /**
+     * @var array
+     */
+    private $routingMap;
+
+    public function __construct($routingMap)
+    {
+        $this->setRoutingMap($routingMap);
+    }
+
     public function route()
     {
-        switch ($_SERVER['QUERY_STRING']) {
-            case '':
-                $a = 'index.html';
-                break;
-            case 'blog':
-                $a = 'blog-full.html';
-                break;
-            case 'services':
-                $a = 'services.html';
-                break;
-            case 'team':
-                $a = 'team.html';
-                break;
-            case 'contact_us':
-                $a = 'contact.html';
-                break;
+        $map=$this->getRoutingMap();
+        $name = $map[$_SERVER['QUERY_STRING']];
+        if (isset($name)) {
+            $way = 'templates/' . $name;
+        } else {
+            $way = 'templates/404.html';
         }
-        $req = 'templates/' . $a;
-        require_once $req;
+        require_once $way;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoutingMap()
+    {
+        return $this->routingMap;
+    }
+
+    /**
+     * @param array $routingMap
+     */
+    public function setRoutingMap($routingMap)
+    {
+        $this->routingMap = $routingMap;
     }
 }

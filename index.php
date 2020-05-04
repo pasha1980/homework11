@@ -1,4 +1,11 @@
 <?php
 require_once 'vendor/autoload.php';
-$a = new \App\Route();
+$map = [
+    ''=>'index.html',
+    'blog'=>'blog-full.html',
+    'services'=>'services.html',
+    'team'=>'team.html',
+    'contact-us'=>'contact.html',
+];
+$a = new \App\Route($map);
 $a->route();
